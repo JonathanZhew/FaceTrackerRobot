@@ -6,8 +6,8 @@
     android:versionName="1">
 
     <uses-sdk
-        android:minSdkVersion="9"
-        android:targetSdkVersion="23" />
+        android:minSdkVersion="14"
+        android:targetSdkVersion="24" />
 
     <uses-feature android:name="android.hardware.camera" />
 
@@ -15,8 +15,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <application
         android:allowBackup="true"
@@ -32,19 +32,27 @@
             android:value="face" />
 
         <activity
-            android:name=".FaceTrackerActivity"
+            android:name=".MainActivity"
             android:icon="@drawable/icon"
-            android:label="Face Tracker"
-            android:screenOrientation="fullSensor"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
-        <activity
-            android:name=".MainActivity">
+            android:label="my robot">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".FaceTrackerActivity"
+            android:icon="@drawable/icon"
+            android:label="tracking your face"
+            android:screenOrientation="fullSensor">
+        </activity>
+
+        <activity
+            android:name=".ControlPanelActivity"
+            android:icon="@drawable/icon"
+            android:label="control panel">
         </activity>
     </application>
 

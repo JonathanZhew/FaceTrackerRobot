@@ -65,6 +65,8 @@ public final class FaceTrackerActivity extends AppCompatActivity {
     // permission request codes need to be < 256
     private static final int RC_HANDLE_CAMERA_PERM = 2;
 
+    private static final int cmdStop = 2;
+
     String address = null;
     private ProgressDialog progress;
     BluetoothAdapter myBluetooth = null;
@@ -200,6 +202,16 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         super.onDestroy();
         if (mCameraSource != null) {
             mCameraSource.release();
+        }
+        move(cmdStop);
+        if (btSocket!=null) //If the btSocket is busy
+        {
+            try
+            {
+                btSocket.close(); //close connection
+            }
+            catch (IOException e)
+            { msg("Error");}
         }
     }
 
@@ -337,6 +349,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         @Override
         public void onMissing(FaceDetector.Detections<Face> detectionResults) {
             mOverlay.remove(mFaceGraphic);
+            move(cmdStop);
         }
 
         /**
@@ -346,6 +359,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         @Override
         public void onDone() {
             mOverlay.remove(mFaceGraphic);
+            move(cmdStop);
         }
     }
 

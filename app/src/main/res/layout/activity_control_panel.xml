@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.google.android.gms.samples.vision.face.facetracker.ControlPanelActivity">
+
+    <Button
+        android:id="@+id/btn_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_stop"
+        android:layout_alignBottom="@+id/btn_stop"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_toLeftOf="@+id/btn_stop"
+        android:layout_toStartOf="@+id/btn_stop"
+        android:text="left"
+        tools:layout_editor_absoluteX="160dp"
+        tools:layout_editor_absoluteY="124dp" />
+
+    <Button
+        android:id="@+id/btn_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="26dp"
+        android:layout_marginRight="26dp"
+        android:layout_toLeftOf="@+id/btn_right"
+        android:layout_toStartOf="@+id/btn_right"
+        android:text="stop"
+        tools:layout_editor_absoluteX="46dp"
+        tools:layout_editor_absoluteY="209dp" />
+
+    <Button
+        android:id="@+id/btn_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_stop"
+        android:layout_alignBottom="@+id/btn_stop"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="18dp"
+        android:layout_marginRight="18dp"
+        android:text="right"
+        tools:layout_editor_absoluteX="160dp"
+        tools:layout_editor_absoluteY="209dp" />
+
+    <Button
+        android:id="@+id/btn_forward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_stop"
+        android:layout_alignLeft="@+id/btn_stop"
+        android:layout_alignStart="@+id/btn_stop"
+        android:layout_marginBottom="24dp"
+        android:text="go"
+        tools:layout_editor_absoluteX="264dp"
+        tools:layout_editor_absoluteY="209dp" />
+
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn_stop"
+        android:layout_alignStart="@+id/btn_stop"
+        android:layout_below="@+id/btn_stop"
+        android:layout_marginTop="16dp"
+        android:text="back up"
+        tools:layout_editor_absoluteX="160dp"
+        tools:layout_editor_absoluteY="284dp" />
+</RelativeLayout>

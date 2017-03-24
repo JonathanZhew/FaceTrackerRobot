@@ -23,7 +23,9 @@ public class MainActivity extends AppCompatActivity {
     //widgets
     Button btnPaired;
     Button btnTracker;
+    Button btnPanel;
     ListView devicelist;
+    String btAddress;
     //Bluetooth
     private BluetoothAdapter myBluetooth = null;
     private Set<BluetoothDevice> pairedDevices;
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         //Calling widgets
         btnPaired = (Button)findViewById(R.id.button);
         btnTracker = (Button)findViewById(R.id.btn_track);
+        btnPanel = (Button)findViewById(R.id.btn_panel);
+
         devicelist = (ListView)findViewById(R.id.listView);
 
         //if the device has bluetooth
@@ -74,7 +78,20 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, FaceTrackerActivity.class);
 
                 //Change the activity.
-                //i.putExtra(EXTRA_ADDRESS, address); //this will be received at ledControl (class) Activity
+                i.putExtra(EXTRA_ADDRESS, btAddress); //this will be received at ledControl (class) Activity
+                startActivity(i);
+            }
+        });
+
+        btnPanel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                // Make an intent to start next activity.
+                Intent i = new Intent(MainActivity.this, ControlPanelActivity.class);
+
+                //Change the activity.
+                i.putExtra(EXTRA_ADDRESS, btAddress); //this will be received at ledControl (class) Activity
                 startActivity(i);
             }
         });
@@ -110,13 +127,13 @@ public class MainActivity extends AppCompatActivity {
         {
             // Get the device MAC address, the last 17 chars in the View
             String info = ((TextView) v).getText().toString();
-            String address = info.substring(info.length() - 17);
+            btAddress = info.substring(info.length() - 17);
 
             // Make an intent to start next activity.
             Intent i = new Intent(MainActivity.this, FaceTrackerActivity.class);
 
             //Change the activity.
-            i.putExtra(EXTRA_ADDRESS, address); //this will be received at ledControl (class) Activity
+            i.putExtra(EXTRA_ADDRESS, btAddress); //this will be received at ledControl (class) Activity
             startActivity(i);
         }
     };
