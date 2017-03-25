@@ -159,12 +159,12 @@ public class MainActivity extends AppCompatActivity {
             btAddress = info.substring(info.length() - 17);
 
             // Make an intent to start next activity.
-            Intent i = new Intent(MainActivity.this, FaceTrackerActivity.class);
+            //Intent i = new Intent(MainActivity.this, FaceTrackerActivity.class);
 
             //Change the activity.
-            i.putExtra(EXTRA_ADDRESS, btAddress); //this will be received at ledControl (class) Activity
-            i.putExtra(CAMERA_ID, CameraName);
-            startActivity(i);
+            //i.putExtra(EXTRA_ADDRESS, btAddress); //this will be received at ledControl (class) Activity
+            //i.putExtra(CAMERA_ID, CameraName);
+            //startActivity(i);
         }
     };
 

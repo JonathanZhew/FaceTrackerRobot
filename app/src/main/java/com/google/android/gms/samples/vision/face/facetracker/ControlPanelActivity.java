@@ -65,7 +65,7 @@ public class ControlPanelActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                move(2);      //method to turn on
+                move(10);      //method to turn on
             }
         });
 
@@ -75,7 +75,7 @@ public class ControlPanelActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                move(3);      //method to turn on
+                move(4);      //method to turn on
             }
         });
 
@@ -85,7 +85,7 @@ public class ControlPanelActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                move(4);      //method to turn on
+                move(3);      //method to turn on
             }
         });
 
@@ -95,7 +95,7 @@ public class ControlPanelActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                move(5);      //method to turn on
+                move(2);      //method to turn on
             }
         });
 

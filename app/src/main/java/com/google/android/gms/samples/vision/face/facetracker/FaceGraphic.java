@@ -108,34 +108,34 @@ class FaceGraphic extends GraphicOverlay.Graphic {
         //canvas.drawText("left eye: " + String.format("%.2f", face.getIsLeftEyeOpenProbability()), x - ID_X_OFFSET*2, y - ID_Y_OFFSET*2, mIdPaint);
 
         String moveInfo = "stop";
-        mMoveCmd = 0;
+        mMoveCmd = 10;
 
         if(x < (mMaxRight/2 - 50))
         {
             //go right;
             moveInfo = "go right";
-            mMoveCmd = 1;
+            mMoveCmd = 3;
         }
 
         if(x > (mMaxRight/2 + 50))
         {
             //go left;
             moveInfo = "go left";
-            mMoveCmd = 2;
+            mMoveCmd = 4;
         }
 
         if(face.getWidth()> 200)
         {
             // go back
             moveInfo = "go back";
-            mMoveCmd = 3;
+            mMoveCmd = 2;
         }
 
         if(face.getWidth() < 128)
         {
             // go froward
             moveInfo = "go froward";
-            mMoveCmd = 4;
+            mMoveCmd = 1;
         }
         canvas.drawText(moveInfo, 10, 100, mIdPaint);
         canvas.drawText(String.format("x(%.2f),y(%.2f),face width(%.2f)",x,y,face.getWidth()), 10, 150, mIdPaint);

@@ -65,7 +65,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
     // permission request codes need to be < 256
     private static final int RC_HANDLE_CAMERA_PERM = 2;
 
-    private static final int cmdStop = 2;
+    private static final int cmdStop = 10;
 
     String address = null;
     String CamSel = null;
@@ -216,6 +216,8 @@ public final class FaceTrackerActivity extends AppCompatActivity {
             mCameraSource.release();
         }
         move(cmdStop);
+        move(cmdStop);
+        move(cmdStop);
         if (btSocket!=null) //If the btSocket is busy
         {
             try
@@ -268,7 +270,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Face Tracker sample")
+        AlertDialog show = builder.setTitle("Face Tracker sample")
                 .setMessage(R.string.no_camera_permission)
                 .setPositiveButton(R.string.ok, listener)
                 .show();
@@ -362,6 +364,9 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         public void onMissing(FaceDetector.Detections<Face> detectionResults) {
             mOverlay.remove(mFaceGraphic);
             move(cmdStop);
+            move(cmdStop);
+            move(cmdStop);
+            move(cmdStop);
         }
 
         /**
@@ -371,6 +376,9 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         @Override
         public void onDone() {
             mOverlay.remove(mFaceGraphic);
+            move(cmdStop);
+            move(cmdStop);
+            move(cmdStop);
             move(cmdStop);
         }
     }
