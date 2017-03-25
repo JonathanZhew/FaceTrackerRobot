@@ -68,6 +68,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
     private static final int cmdStop = 2;
 
     String address = null;
+    String CamSel = null;
     private ProgressDialog progress;
     BluetoothAdapter myBluetooth = null;
     BluetoothSocket btSocket = null;
@@ -87,6 +88,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
 
         Intent newint = getIntent();
         address = newint.getStringExtra(MainActivity.EXTRA_ADDRESS); //receive the address of the bluetooth device
+        CamSel = newint.getStringExtra(MainActivity.CAMERA_ID);
 
         setContentView(R.layout.main);
 
@@ -167,11 +169,21 @@ public final class FaceTrackerActivity extends AppCompatActivity {
             Log.w(TAG, "Face detector dependencies are not yet available.");
         }
 
-        mCameraSource = new CameraSource.Builder(context, detector)
-                .setRequestedPreviewSize(640, 480)
-                .setFacing(CameraSource.CAMERA_FACING_FRONT)
-                .setRequestedFps(30.0f)
-                .build();
+        String str = "facing_front";
+        if( 0 == CamSel.compareTo(str) ) {
+            mCameraSource = new CameraSource.Builder(context, detector)
+                    .setRequestedPreviewSize(640, 480)
+                    .setFacing(CameraSource.CAMERA_FACING_FRONT)
+                    .setRequestedFps(30.0f)
+                    .build();
+        }
+        else {
+            mCameraSource = new CameraSource.Builder(context, detector)
+                    .setRequestedPreviewSize(640, 480)
+                    .setFacing(CameraSource.CAMERA_FACING_BACK)
+                    .setRequestedFps(30.0f)
+                    .build();
+        }
     }
 
     /**

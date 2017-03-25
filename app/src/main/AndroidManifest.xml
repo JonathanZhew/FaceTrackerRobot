@@ -33,7 +33,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:icon="@drawable/icon"
+            android:icon="@drawable/roboticon"
             android:label="my robot">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

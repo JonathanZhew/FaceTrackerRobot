@@ -1,22 +1,33 @@
 package com.google.android.gms.samples.vision.face.facetracker;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.zip.CheckedInputStream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,12 +35,15 @@ public class MainActivity extends AppCompatActivity {
     Button btnPaired;
     Button btnTracker;
     Button btnPanel;
+    CheckBox chkFxCam;
+    String CameraName;
     ListView devicelist;
     String btAddress;
     //Bluetooth
     private BluetoothAdapter myBluetooth = null;
     private Set<BluetoothDevice> pairedDevices;
     public static String EXTRA_ADDRESS = "device_address";
+    public static String CAMERA_ID = "cam_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,11 +55,11 @@ public class MainActivity extends AppCompatActivity {
         btnPaired = (Button)findViewById(R.id.button);
         btnTracker = (Button)findViewById(R.id.btn_track);
         btnPanel = (Button)findViewById(R.id.btn_panel);
-
         devicelist = (ListView)findViewById(R.id.listView);
-
+        chkFxCam = (CheckBox)findViewById(R.id.btn_select_cam);
         //if the device has bluetooth
         myBluetooth = BluetoothAdapter.getDefaultAdapter();
+        CameraName = "facing_front";
 
         if(myBluetooth == null)
         {
@@ -78,7 +92,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, FaceTrackerActivity.class);
 
                 //Change the activity.
-                i.putExtra(EXTRA_ADDRESS, btAddress); //this will be received at ledControl (class) Activity
+                i.putExtra(EXTRA_ADDRESS, btAddress);
+                i.putExtra(CAMERA_ID, CameraName);
                 startActivity(i);
             }
         });
@@ -91,11 +106,25 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, ControlPanelActivity.class);
 
                 //Change the activity.
-                i.putExtra(EXTRA_ADDRESS, btAddress); //this will be received at ledControl (class) Activity
+                i.putExtra(EXTRA_ADDRESS, btAddress);
+                i.putExtra(CAMERA_ID, CameraName);
                 startActivity(i);
             }
         });
 
+        chkFxCam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Is the view now checked?
+                boolean checked = ((CheckBox) v).isChecked();
+                if(checked) {
+                    CameraName = "facing_front";
+                }
+                else{
+                    CameraName = "facing_bcak";
+                }
+            }
+        });
     }
 
     private void pairedDevicesList()
@@ -134,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
 
             //Change the activity.
             i.putExtra(EXTRA_ADDRESS, btAddress); //this will be received at ledControl (class) Activity
+            i.putExtra(CAMERA_ID, CameraName);
             startActivity(i);
         }
     };
@@ -156,9 +186,49 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+            showPopup(MainActivity.this, new Point(0,500));
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    // The method that displays the popup.
+    private void showPopup(final Activity context, Point p) {
+        int popupWidth = 1000;
+        int popupHeight = 1000;
+
+        // Inflate the popup_layout.xml
+        LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.popup);
+        LayoutInflater layoutInflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = layoutInflater.inflate(R.layout.popup_about, viewGroup);
+
+        // Creating the PopupWindow
+        final PopupWindow popup = new PopupWindow(context);
+        popup.setContentView(layout);
+        popup.setWidth(popupWidth);
+        popup.setHeight(popupHeight);
+        popup.setFocusable(true);
+
+        // Some offset to align the popup a bit to the right, and a bit down, relative to button's position.
+        int OFFSET_X = 30;
+        int OFFSET_Y = 30;
+
+        // Clear the default translucent background
+        //popup.setBackgroundDrawable(new BitmapDrawable());
+
+        // Displaying the popup at the specified location, + offsets.
+        popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
+
+        // Getting a reference to Close button, and close the popup when clicked.
+        Button close = (Button) layout.findViewById(R.id.close);
+        close.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                popup.dismiss();
+            }
+        });
     }
 }
