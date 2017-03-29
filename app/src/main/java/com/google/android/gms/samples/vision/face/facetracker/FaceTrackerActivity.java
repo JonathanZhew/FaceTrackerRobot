@@ -69,6 +69,8 @@ public final class FaceTrackerActivity extends AppCompatActivity {
     private int TrackingfaceId = -1;
     private int NewfaceId = -1;
 
+    int lastCmd;
+    int CmdCnt=0;
     String address = null;
     String CamSel = null;
     private ProgressDialog progress;
@@ -360,7 +362,26 @@ public final class FaceTrackerActivity extends AppCompatActivity {
 
             if(mFaceGraphic.getId() == TrackingfaceId) {
                 int cmdID = mFaceGraphic.getMoveCmd();
-                move(cmdID);
+
+                if((cmdID == 3)||(cmdID == 4))
+                {
+                    CmdCnt++;
+                    if(CmdCnt < 3)
+                    {
+                        move(cmdID);
+                    }
+                    else if(CmdCnt < 9)
+                    {
+                        move(cmdStop);
+                    }
+                    else
+                    {
+                        CmdCnt = 0;
+                    }
+                }
+                else{
+                    move(cmdID);
+                }
             }
         }
 

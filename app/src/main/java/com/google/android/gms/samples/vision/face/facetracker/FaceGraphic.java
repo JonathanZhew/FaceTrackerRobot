@@ -113,17 +113,17 @@ class FaceGraphic extends GraphicOverlay.Graphic {
         mMoveCmd = 10;
 
         float scWidth = canvas.getWidth();
-        if(x < (scWidth/2 - 50))
+        if(x < (scWidth/2 - 100))
         {
             //go right;
             moveInfo = "go right";
-            mMoveCmd = 4;
-        }else if(x > (scWidth/2 + 50))
+            mMoveCmd = 3;
+        }else if(x > (scWidth/2 + 100))
         {
             //go left;
             moveInfo = "go left";
-            mMoveCmd = 3;
-        }else if(face.getWidth()> 200)
+            mMoveCmd = 4;
+        }else if(face.getWidth()> 180)
         {
             // go back
             moveInfo = "go back";
