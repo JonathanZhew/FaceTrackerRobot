@@ -66,6 +66,8 @@ public final class FaceTrackerActivity extends AppCompatActivity {
     private static final int RC_HANDLE_CAMERA_PERM = 2;
 
     private static final int cmdStop = 10;
+    private int TrackingfaceId = -1;
+    private int NewfaceId = -1;
 
     String address = null;
     String CamSel = null;
@@ -150,7 +152,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
 
         Context context = getApplicationContext();
         FaceDetector detector = new FaceDetector.Builder(context)
-                .setClassificationType(FaceDetector.ALL_CLASSIFICATIONS)
+                .setClassificationType(FaceDetector.NO_CLASSIFICATIONS)
                 .build();
 
         detector.setProcessor(
@@ -215,11 +217,10 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         if (mCameraSource != null) {
             mCameraSource.release();
         }
-        move(cmdStop);
-        move(cmdStop);
-        move(cmdStop);
+
         if (btSocket!=null) //If the btSocket is busy
         {
+            move(cmdStop);
             try
             {
                 btSocket.close(); //close connection
@@ -341,6 +342,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         @Override
         public void onNewItem(int faceId, Face item) {
             mFaceGraphic.setId(faceId);
+            NewfaceId = faceId;
         }
 
         /**
@@ -348,11 +350,18 @@ public final class FaceTrackerActivity extends AppCompatActivity {
          */
         @Override
         public void onUpdate(FaceDetector.Detections<Face> detectionResults, Face face) {
-            int cmdID;
             mOverlay.add(mFaceGraphic);
             mFaceGraphic.updateFace(face);
-            cmdID = mFaceGraphic.getMoveCmd();
-            move(cmdID);
+
+            if(TrackingfaceId == -1){
+                TrackingfaceId = NewfaceId;
+                move(cmdStop);
+            }
+
+            if(mFaceGraphic.getId() == TrackingfaceId) {
+                int cmdID = mFaceGraphic.getMoveCmd();
+                move(cmdID);
+            }
         }
 
         /**
@@ -366,7 +375,9 @@ public final class FaceTrackerActivity extends AppCompatActivity {
             move(cmdStop);
             move(cmdStop);
             move(cmdStop);
-            move(cmdStop);
+            if(TrackingfaceId == mFaceGraphic.getId()){
+                TrackingfaceId = -1;
+            }
         }
 
         /**
@@ -379,7 +390,9 @@ public final class FaceTrackerActivity extends AppCompatActivity {
             move(cmdStop);
             move(cmdStop);
             move(cmdStop);
-            move(cmdStop);
+            if(TrackingfaceId == mFaceGraphic.getId()){
+                TrackingfaceId = -1;
+            }
         }
     }
 

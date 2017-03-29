@@ -51,9 +51,7 @@ class FaceGraphic extends GraphicOverlay.Graphic {
     private volatile Face mFace;
     private int mFaceId;
     private float mFaceHappiness;
-    private float mMaxRight = (float) 1080;
-    private float mBottemRight = (float) 1722;;
-    private int mMoveCmd;
+    private int mMoveCmd = 10;
 
     FaceGraphic(GraphicOverlay overlay) {
         super(overlay);
@@ -78,6 +76,9 @@ class FaceGraphic extends GraphicOverlay.Graphic {
         mFaceId = id;
     }
 
+    int getId( ) {
+        return mFaceId;
+    }
 
     /**
      * Updates the face instance from the detection of the most recent frame.  Invalidates the
@@ -103,42 +104,39 @@ class FaceGraphic extends GraphicOverlay.Graphic {
         float y = translateY(face.getPosition().y + face.getHeight() / 2);
         canvas.drawCircle(x, y, FACE_POSITION_RADIUS, mFacePositionPaint);
         canvas.drawText("id: " + mFaceId, x + ID_X_OFFSET, y + ID_Y_OFFSET, mIdPaint);
-        canvas.drawText("happiness: " + String.format("%.2f", face.getIsSmilingProbability()), x - ID_X_OFFSET, y - ID_Y_OFFSET, mIdPaint);
+        //canvas.drawText("happiness: " + String.format("%.2f", face.getIsSmilingProbability()), x - ID_X_OFFSET, y - ID_Y_OFFSET, mIdPaint);
         //canvas.drawText("right eye: " + String.format("%.2f", face.getIsRightEyeOpenProbability()), x + ID_X_OFFSET * 2, y + ID_Y_OFFSET * 2, mIdPaint);
         //canvas.drawText("left eye: " + String.format("%.2f", face.getIsLeftEyeOpenProbability()), x - ID_X_OFFSET*2, y - ID_Y_OFFSET*2, mIdPaint);
+
 
         String moveInfo = "stop";
         mMoveCmd = 10;
 
-        if(x < (mMaxRight/2 - 50))
+        float scWidth = canvas.getWidth();
+        if(x < (scWidth/2 - 50))
         {
             //go right;
             moveInfo = "go right";
-            mMoveCmd = 3;
-        }
-
-        if(x > (mMaxRight/2 + 50))
+            mMoveCmd = 4;
+        }else if(x > (scWidth/2 + 50))
         {
             //go left;
             moveInfo = "go left";
-            mMoveCmd = 4;
-        }
-
-        if(face.getWidth()> 200)
+            mMoveCmd = 3;
+        }else if(face.getWidth()> 200)
         {
             // go back
             moveInfo = "go back";
             mMoveCmd = 2;
-        }
-
-        if(face.getWidth() < 128)
+        }else if((face.getWidth() < 128)&&(y>250))
         {
             // go froward
             moveInfo = "go froward";
             mMoveCmd = 1;
         }
+
         canvas.drawText(moveInfo, 10, 100, mIdPaint);
-        canvas.drawText(String.format("x(%.2f),y(%.2f),face width(%.2f)",x,y,face.getWidth()), 10, 150, mIdPaint);
+        canvas.drawText(String.format("x(%.2f),y(%.2f),face width(%.2f)",x,y,face.getWidth()), 30, 150, mIdPaint);
         // Draws a bounding box around the face.
         float xOffset = scaleX(face.getWidth() / 2.0f);
         float yOffset = scaleY(face.getHeight() / 2.0f);
