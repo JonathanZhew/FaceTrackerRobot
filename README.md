@@ -14,7 +14,7 @@ Software:
 
 1. develop fw car comtrol included bluetooh interface(or Use off-the-shelf)
 
-fw project referance:
+fw project referance:https://github.com/JonathanZhew/self-balancingCar
 
 2. develop android apk
 
