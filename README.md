@@ -2,6 +2,8 @@
 
 An intelligent toy, it can track a person's face, following you when you walk.
 
+https://youtu.be/rzGKUDsJUUs
+
 <img src="https://github.com/JonathanZhew/FaceTrackerRobot/blob/master/MainActivity.png" width="256"><img src="https://github.com/JonathanZhew/FaceTrackerRobot/blob/master/FaceTrackerActivity.png" width="256"><img src="https://github.com/JonathanZhew/FaceTrackerRobot/blob/master/ControlPanelActivity.png" width="256">
 
 Hardware:
